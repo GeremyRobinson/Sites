@@ -179,7 +179,8 @@ function autoFit(pg: Page, bp: 'tablet' | 'phone', src: Page, respectOwn = true)
       }
       if (Object.keys(p).length) patches.set(n.id, p)
       if (n.type === 'frame') {
-        fitted.set(n.id, { ...a, ...p })
+        // Its children are fitted to what this view shows, including columns or spacing set by hand here.
+        fitted.set(n.id, { ...a, ...p, ...(own.cols !== undefined ? { cols: own.cols } : {}), ...(own.gap !== undefined ? { gap: own.gap } : {}), ...(own.pad !== undefined ? { pad: own.pad } : {}) })
         visit(n.id, Math.min(1, ratio), a.w * Math.min(1, ratio), a.w)
       }
     }

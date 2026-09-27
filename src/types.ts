@@ -203,6 +203,8 @@ export interface Project {
     viewsFitted?: boolean
     // tablet and phone fit themselves to desktop live (stored one-off fits were dropped)
     viewsAuto?: boolean
+    // the starter guide project
+    guide?: boolean
   }
   windows: Record<ToolId, WinState>
   activePageId: string

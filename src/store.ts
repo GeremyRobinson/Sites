@@ -2,7 +2,7 @@ import { create } from 'zustand'
 import type { Asset, Breakpoint, CodeFile, Collection, ColorStyle, Page, TextStyle, Project, SNode, ToolId, View, WinState } from './types'
 import { applyInView, clearView, defaultViews, dropFittedChanges, effective, resolvePage, viewBase } from './views'
 import { dbGet, dbSet } from './db'
-import { seedProjects } from './seed'
+import { OLD_SAMPLES, seedProjects } from './seed'
 import { TEMPLATES, fromTemplate } from './cms'
 import { styleUid, textPatch } from './theme'
 import { childrenOf, cloneSubtrees, descendantIds, moveInto, topmost } from './tree'
@@ -188,6 +188,13 @@ export const useStore = create<State>((set, get) => {
     load: async () => {
       let projects = (await dbGet<Project[]>('projects').catch(() => undefined)) || []
       if (!projects.length) projects = seedProjects()
+      // Once: the guide replaces the two samples earlier versions started with.
+      else if ((await dbGet<number>('seedVersion').catch(() => undefined)) !== 2) {
+        projects = projects.filter((p) => !OLD_SAMPLES.includes(p.name))
+        if (!projects.some((p) => p.settings.guide)) projects = [...seedProjects(), ...projects]
+        dbSet('seedVersion', 2).catch(() => undefined)
+        dbSet('projects', projects).catch(() => undefined)
+      }
       projects = projects.map((p) => {
         const windows = { ...defaultWindows(), ...p.windows }
         // Canvas theme used to default to 'light'; it now follows the app theme.
