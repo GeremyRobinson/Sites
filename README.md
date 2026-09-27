@@ -42,4 +42,4 @@ To swap fonts, replace the file and edit the `@font-face` block at the top of `s
 Project settings > AI picks a provider: Anthropic (API key), any OpenAI-compatible endpoint, or a local CLI such as Claude Code through `bridge/claude-code-bridge.mjs` (see `bridge/README.md`). Keys stay in the browser's local storage and are never written into the project or its export. The AI panel in the Code window shows a diff before anything is applied.
 
 ## Hosting
-Every push to `main` builds the app and publishes it to GitHub Pages (`.github/workflows/deploy.yml`) at https://geremyrobinson.github.io/sites/. Nothing needs installing to use it: open the link.
+Every push to `main` builds the app and publishes it to GitHub Pages (`.github/workflows/deploy.yml`) at https://geremyrobinson.github.io/Sites/. Nothing needs installing to use it: open the link.
